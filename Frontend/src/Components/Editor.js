@@ -43,7 +43,6 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
   }
 
   useEffect(() => {
-    let val = socketRef.current;
     if (socketRef.current) {
       socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
         if (code !== null) {
@@ -53,9 +52,9 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
     }
 
     return () => {
-      val.off(ACTIONS.CODE_CHANGE);
+      socketRef.current.off(ACTIONS.CODE_CHANGE);
     };
-  }, [value]);
+  }, [socketRef.current, socketRef]);
 
   useEffect(() => {
     if (!isLocked.lock && isLocked.mount > 0) {
