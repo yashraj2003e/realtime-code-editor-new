@@ -19,8 +19,8 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
         roomId,
         code: val,
       });
-    }, 300),
-    []
+    }, 500),
+    [setValue, onCodeChange, socketRef]
   );
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
     return () => {
       socketRef.current.off(ACTIONS.CODE_CHANGE);
     };
-  }, [value]);
+  }, [value, socketRef]);
 
   useEffect(() => {
     if (!isLocked.lock && isLocked.mount > 0) {
