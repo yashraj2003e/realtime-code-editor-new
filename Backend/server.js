@@ -12,7 +12,7 @@ app.use(cors());
 app.use(router);
 
 const server = http.createServer(app);
-const io = new Server(server);
+const io = Server(server);
 
 const userSocketMap = {};
 
