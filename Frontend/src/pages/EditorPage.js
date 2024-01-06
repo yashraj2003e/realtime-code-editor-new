@@ -24,7 +24,7 @@ export default function EditorPage() {
 
   useEffect(() => {
     const init = async () => {
-      socketRef.current = await io(ENDPOINT);
+      socketRef.current = await initSocket();
       socketRef.current.on("connect_error", (err) => handleErrors(err));
       socketRef.current.on("connect_failed", (err) => handleErrors(err));
 
