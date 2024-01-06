@@ -7,7 +7,13 @@ const { Socket } = require("socket.io-client");
 const ACTIONS = require("./Actions");
 
 const app = express();
-app.use(cors({ origin: [], methods: ["POST", "GET"], credentials: false }));
+app.use(
+  cors({
+    origin: ["https://realtime-code-editor-new.vercel.app/"],
+    methods: ["POST", "GET"],
+    credentials: false,
+  })
+);
 
 const server = http.createServer(app);
 const io = new Server(server);
