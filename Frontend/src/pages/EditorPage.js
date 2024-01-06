@@ -12,7 +12,7 @@ import ACTIONS from "../Actions";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const ENDPOINT = "https://realtime-code-editor-backend.vercel.app/";
+const ENDPOINT = "https://api-1u92.onrender.com/";
 
 export default function EditorPage() {
   const [clients, setClients] = useState([]);
