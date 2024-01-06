@@ -11,10 +11,22 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
   const [isLocked, setIsLocked] = useState({ lock: false, mount: 0 });
   const [value, setValue] = useState("");
 
+  if (socketRef.current) {
+    socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
+      if (code !== null) {
+        setValue(code);
+      }
+    });
+  }
+
   const onChange = useCallback(
     debounce((val, viewUpdate) => {
       setValue(val);
       onCodeChange(val);
+      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+        roomId,
+        code: val,
+      });
     }, 500),
     [setValue, onCodeChange, socketRef]
   );
@@ -45,17 +57,12 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
           setValue(code);
         }
       });
-
-      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-        roomId,
-        code: value,
-      });
     }
 
     return () => {
       socketRef.current.off(ACTIONS.CODE_CHANGE);
     };
-  }, [value, socketRef, roomId]);
+  }, [value, socketRef]);
 
   useEffect(() => {
     if (!isLocked.lock && isLocked.mount > 0) {
