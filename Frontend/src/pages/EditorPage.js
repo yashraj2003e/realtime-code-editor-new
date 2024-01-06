@@ -10,6 +10,9 @@ import Editor from "../Components/Editor";
 import { initSocket } from "../socket";
 import ACTIONS from "../Actions";
 import toast from "react-hot-toast";
+import { io } from "socket.io-client";
+
+const ENDPOINT = "https://realtime-code-editor-backend.vercel.app/";
 
 export default function EditorPage() {
   const [clients, setClients] = useState([]);
@@ -21,7 +24,7 @@ export default function EditorPage() {
 
   useEffect(() => {
     const init = async () => {
-      socketRef.current = await initSocket();
+      socketRef.current = await io(ENDPOINT);
       socketRef.current.on("connect_error", (err) => handleErrors(err));
       socketRef.current.on("connect_failed", (err) => handleErrors(err));
 
