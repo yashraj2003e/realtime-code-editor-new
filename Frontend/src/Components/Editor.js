@@ -5,39 +5,42 @@ import { xml } from "@codemirror/lang-xml";
 import { java } from "@codemirror/lang-java";
 import { okaidia } from "@uiw/codemirror-theme-okaidia";
 import toast from "react-hot-toast";
+import { debounce } from "lodash";
 import ACTIONS from "../Actions";
 export default function Editor({ socketRef, roomId, onCodeChange }) {
   const [isLocked, setIsLocked] = useState({ lock: false, mount: 0 });
   const [value, setValue] = useState("");
-  const editorRef = useRef(null);
 
-  const onChange = useCallback((val, viewUpdate) => {
-    setValue(val);
-    onCodeChange(val);
-    socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-      roomId,
-      code: val,
-    });
-  }, []);
+  const onChange = useCallback(
+    debounce((val, viewUpdate) => {
+      setValue(val);
+      onCodeChange(val);
+      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+        roomId,
+        code: val,
+      });
+    }, 500),
+    []
+  );
 
   useEffect(() => {
+    function checkIfCode(e) {
+      if (
+        ((e.keyCode >= 65 && e.keyCode <= 91) ||
+          (e.keyCode >= 48 && e.keyCode <= 57) ||
+          (e.keyCode >= 97 && e.keyCode <= 122)) &&
+        isLocked.lock
+      ) {
+        toast.error("Editor is locked !");
+      }
+    }
+
     function check() {
       document.addEventListener("keyup", checkIfCode);
     }
     check();
     return () => document.removeEventListener("keyup", checkIfCode);
-  });
-
-  function checkIfCode(e) {
-    if (
-      ((e.keyCode >= 65 && e.keyCode <= 91) ||
-        (e.keyCode >= 48 && e.keyCode <= 57) ||
-        (e.keyCode >= 97 && e.keyCode <= 122)) &&
-      isLocked.lock
-    ) {
-      toast.error("Editor is locked !");
-    }
-  }
+  }, [isLocked.lock]);
 
   useEffect(() => {
     if (socketRef.current) {
@@ -77,7 +80,6 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
         style={{ fontSize: "1rem" }}
         // autoSave={true}
         autoFocus
-        ref={editorRef}
         value={value}
         className="code-mirror"
         height="100vh"
