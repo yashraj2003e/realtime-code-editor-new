@@ -5,6 +5,7 @@ const path = require("path");
 const { Server } = require("socket.io");
 const { Socket } = require("socket.io-client");
 const ACTIONS = require("./Actions");
+const router = require("./router");
 
 const app = express();
 app.use(cors());
