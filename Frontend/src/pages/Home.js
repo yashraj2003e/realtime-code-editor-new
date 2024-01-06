@@ -12,7 +12,6 @@ export default function Home() {
     if (e.code === "Enter") {
       joinRoom();
     }
-    console.log(e.code);
   }
 
   useEffect(() => {

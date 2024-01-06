@@ -29,11 +29,10 @@ export default function EditorPage() {
       socketRef.current.on("connect_failed", (err) => handleErrors(err));
 
       function handleErrors(e) {
-        console.log("Socket error", e);
         toast.error("Socket Connection failed, try again later !");
         reactNavigator("/");
       }
-      console.log(id, location.state.username);
+
       socketRef.current.emit(ACTIONS.JOIN, {
         roomId: id,
         username: location.state?.username,
@@ -85,7 +84,6 @@ export default function EditorPage() {
   }
 
   if (!location.state) {
-    console.log(1);
     return <Navigate to="/" />;
   }
 
