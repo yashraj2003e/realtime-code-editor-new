@@ -20,7 +20,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
         code: val,
       });
     },
-    [socketRef, roomId, onCodeChange]
+    [socketRef, roomId]
   );
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
     return () => {
       val.off(ACTIONS.CODE_CHANGE);
     };
-  }, [socketRef]);
+  }, [value]);
 
   useEffect(() => {
     if (!isLocked.lock && isLocked.mount > 0) {
