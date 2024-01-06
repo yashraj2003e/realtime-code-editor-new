@@ -11,17 +11,14 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
   const [value, setValue] = useState("");
   const editorRef = useRef(null);
 
-  const onChange = useCallback(
-    (val, viewUpdate) => {
-      setValue(val);
-      onCodeChange(val);
-      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-        roomId,
-        code: val,
-      });
-    },
-    [socketRef, roomId]
-  );
+  const onChange = useCallback((val, viewUpdate) => {
+    setValue(val);
+    onCodeChange(val);
+    socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+      roomId,
+      code: val,
+    });
+  }, []);
 
   useEffect(() => {
     function check() {
@@ -54,7 +51,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
     return () => {
       socketRef.current.off(ACTIONS.CODE_CHANGE);
     };
-  }, [socketRef.current, socketRef]);
+  }, [value]);
 
   useEffect(() => {
     if (!isLocked.lock && isLocked.mount > 0) {
