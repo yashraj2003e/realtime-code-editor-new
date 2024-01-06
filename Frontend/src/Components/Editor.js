@@ -15,10 +15,6 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
     debounce((val, viewUpdate) => {
       setValue(val);
       onCodeChange(val);
-      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-        roomId,
-        code: val,
-      });
     }, 500),
     [setValue, onCodeChange, socketRef]
   );
@@ -49,12 +45,17 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
           setValue(code);
         }
       });
+
+      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+        roomId,
+        code: value,
+      });
     }
 
     return () => {
       socketRef.current.off(ACTIONS.CODE_CHANGE);
     };
-  }, [value, socketRef]);
+  }, [value, socketRef, roomId]);
 
   useEffect(() => {
     if (!isLocked.lock && isLocked.mount > 0) {
