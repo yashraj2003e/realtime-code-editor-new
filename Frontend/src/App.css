@@ -1,0 +1,157 @@
+.homePageWrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.formwrapper {
+  background: #282a36;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 80%;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+}
+
+footer a {
+  color: #4aee88;
+  transition: all 0.3s ease-in-out;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainLabel {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.homePageLogo {
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.inputBox {
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  margin-bottom: 14px;
+  background: #eee;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.joinBtn {
+  align-self: flex-end;
+}
+
+.joinBtn {
+  background: #4aed88;
+  width: 100px;
+}
+
+.joinBtn:hover,
+.leaveBtn:hover {
+  box-shadow: 0 0 5px green;
+  color: white;
+  background: #2b824c;
+}
+
+.createInfo {
+  margin-top: 15px;
+  align-self: center;
+}
+
+.createInfo a {
+  user-select: none;
+  cursor: pointer;
+  color: #4aed88;
+  text-decoration: none;
+  border-bottom: 1px solid #4aed88;
+  transition: all 0.3s ease-in-out;
+}
+
+.createInfo a:hover,
+footer a:hover {
+  color: #368654;
+  border-color: #368654;
+}
+
+.hr-line {
+  border: 0.5px solid rgb(139, 139, 139);
+}
+
+.mainWrap {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  height: 100vh;
+}
+
+.aside {
+  background: #1c1e29;
+  padding: 16px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.asideInner {
+  flex: 1;
+}
+
+.clientsList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.client {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.userName {
+  margin-top: 10px;
+}
+
+.logo {
+  border-bottom: 1px solid #424242;
+  padding-bottom: 10px;
+}
+
+.logoImage {
+  height: 60px;
+}
+
+.leaveBtn {
+  margin-top: 20px;
+  background: #4aed88;
+}
+
+.lockBtn {
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+  z-index: 1000;
+}
