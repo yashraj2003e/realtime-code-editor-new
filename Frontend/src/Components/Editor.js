@@ -28,7 +28,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
         code: val,
       });
     }, 500),
-    [setValue, onCodeChange, socketRef]
+    []
   );
 
   useEffect(() => {
