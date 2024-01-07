@@ -13,7 +13,9 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
 
   if (socketRef.current) {
     socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-      if (code !== null) {
+      if (code === null) {
+        setValue("");
+      } else {
         setValue(code);
       }
     });

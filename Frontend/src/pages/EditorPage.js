@@ -50,6 +50,7 @@ export default function EditorPage() {
           socketRef.current.emit(ACTIONS.SYNC_CODE, {
             code: codeRef.current,
             socketId: socketId,
+            roomId: id,
           });
         }
       );
