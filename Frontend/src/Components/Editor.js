@@ -13,10 +13,9 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
 
   if (socketRef.current) {
     socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-      if (code === null) {
-        setValue("");
-      } else {
+      if (code !== null) {
         setValue(code);
+        onCodeChange(code);
       }
     });
   }
@@ -24,7 +23,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
   const onChange = useCallback(
     debounce((val, viewUpdate) => {
       setValue(val);
-      onCodeChange(val);
+      // onCodeChange(val);
       socketRef.current.emit(ACTIONS.CODE_CHANGE, {
         roomId,
         code: val,
@@ -56,6 +55,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
     if (socketRef.current) {
       socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
         if (code !== null) {
+          onCodeChange(code);
           setValue(code);
         }
       });
@@ -64,7 +64,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
     return () => {
       socketRef.current.off(ACTIONS.CODE_CHANGE);
     };
-  }, [value, socketRef]);
+  }, [value, socketRef, onChange]);
 
   useEffect(() => {
     if (!isLocked.lock && isLocked.mount > 0) {
