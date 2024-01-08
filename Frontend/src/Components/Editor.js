@@ -27,7 +27,7 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
         roomId,
         code: val,
       });
-    }, 500),
+    }, 800),
     []
   );
 
