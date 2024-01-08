@@ -50,7 +50,7 @@ io.on("connection", (Socket) => {
     io.to(roomId).emit(ACTIONS.CODE_CHANGE, { code });
   });
 
-  Socket.on(ACTIONS.SYNC_CODE, ({ code, socketId }) => {
+  Socket.on(ACTIONS.SYNC_CODE, ({ code, socketId, roomId }) => {
     io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
   });
 

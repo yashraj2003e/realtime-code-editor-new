@@ -5,7 +5,7 @@ import { xml } from "@codemirror/lang-xml";
 import { java } from "@codemirror/lang-java";
 import { okaidia } from "@uiw/codemirror-theme-okaidia";
 import toast from "react-hot-toast";
-import { debounce } from "lodash";
+import { throttle } from "lodash";
 import ACTIONS from "../Actions";
 export default function Editor({ socketRef, roomId, onCodeChange }) {
   const [isLocked, setIsLocked] = useState({ lock: false, mount: 0 });
@@ -21,9 +21,8 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
   }
 
   const onChange = useCallback(
-    debounce((val, viewUpdate) => {
+    throttle((val, viewUpdate) => {
       setValue(val);
-      // onCodeChange(val);
       socketRef.current.emit(ACTIONS.CODE_CHANGE, {
         roomId,
         code: val,
@@ -52,7 +51,9 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
   }, [isLocked.lock]);
 
   useEffect(() => {
+    let val;
     if (socketRef.current) {
+      val = socketRef;
       socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
         if (code !== null) {
           onCodeChange(code);
@@ -62,9 +63,11 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
     }
 
     return () => {
-      socketRef.current.off(ACTIONS.CODE_CHANGE);
+      if (val) {
+        val.current.off(ACTIONS.CODE_CHANGE);
+      }
     };
-  }, [value, socketRef, onChange]);
+  }, [value, socketRef, onCodeChange]);
 
   useEffect(() => {
     if (!isLocked.lock && isLocked.mount > 0) {
@@ -88,7 +91,6 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
       </button>
       <CodeMirror
         style={{ fontSize: "1rem" }}
-        // autoSave={true}
         autoFocus
         value={value}
         className="code-mirror"
