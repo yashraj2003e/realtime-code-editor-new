@@ -21,13 +21,13 @@ export default function Editor({ socketRef, roomId, onCodeChange }) {
   }
 
   const onChange = useCallback(
-    throttle((val, viewUpdate) => {
+    debounce((val, viewUpdate) => {
       setValue(val);
       socketRef.current.emit(ACTIONS.CODE_CHANGE, {
         roomId,
         code: val,
       });
-    }, 1000),
+    }, 500),
     []
   );
 
